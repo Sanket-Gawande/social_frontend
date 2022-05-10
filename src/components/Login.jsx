@@ -1,8 +1,15 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
+import { GoogleLogin } from 'react-google-login'
 
 const AddPost = ({ state }) => {
   const classs = state ? '' : 'hidden'
+  const GoogleLoginSuccess = (data) => {
+    console.log({ data })
+  }
+  const GoogleLoginFailure = (error) => {
+    console.log({ error })
+  }
   return (
     <>
       <div
@@ -22,23 +29,41 @@ const AddPost = ({ state }) => {
             <form method="post">
               <input
                 type="text"
-                name='username'
+                name="username"
                 placeholder="username"
                 className="input w-full border  outline-none border-secondary/40 rounded-md py-1 px-4 text-secondary "
               />
               <input
                 type="password"
-                name='password'
+                name="password"
                 placeholder="Password"
                 className="input w-full border  my-4 outline-none border-secondary/40 rounded-md py-1 px-4 text-secondary "
               />
-              <button className='bg-secondary text-main py-1 px-6 rounded-md'> Login </button>
-              <p className='font-anek my-2 text-secondary/90'>Don't have an account ,  
-                <Link to="/signup" className='text-main font-semibold mx-1'>
-                Sign up
+              <button className="bg-secondary text-main py-1 px-6 rounded-md">
+                {' '}
+                Login{' '}
+              </button>
+              <p className="font-anek my-2 text-secondary/90">
+                Don't have an account ,
+                <Link to="/signup" className="text-main font-semibold mx-1">
+                  Sign up
                 </Link>
                 here .
               </p>
+              <GoogleLogin
+                clientId="681713331231-7uq53f6qfjcuq8fvd89r2jh7ki8ofmej.apps.googleusercontent.com"
+                onSuccess={GoogleLoginSuccess}
+                onFailure={GoogleLoginFailure}
+                render={(props) => (
+                  <button
+                    disabled={props.disabled}
+                    onClick={props.onClick}
+                    className="bg-[white] text-secondary"
+                  >
+                    Login with google
+                  </button>
+                )}
+              />
             </form>
           </div>
         </section>

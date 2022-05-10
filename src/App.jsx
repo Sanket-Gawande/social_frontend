@@ -7,7 +7,7 @@ import Signup from './components/Signup'
 import AddPost from './components/AddPost'
 import IndividualPost from './components/Posts/IndividualPost'
 const App = () => {
- const login =1;
+ const login =0;
   return (
     <>
       <Header isLogin={login}/>
