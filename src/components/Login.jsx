@@ -1,19 +1,23 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 import { GoogleLogin } from 'react-google-login'
-
-const AddPost = ({ state }) => {
-  const classs = state ? '' : 'hidden'
+import {useDispatch,useSelector} from "react-redux"
+const AddPost = () => {
+  
+  
+  
   const GoogleLoginSuccess = (data) => {
     console.log({ data })
   }
   const GoogleLoginFailure = (error) => {
     console.log({ error })
   }
+  const small = useSelector(state => state.misc.isSmallScreen);
+  
   return (
     <>
       <div
-        className={` ${classs}  md:block py-8 lg:py-12 lg:px-12 md:min-w-[400px] max-w-[450px] md:mr-8 lg:mr-16 h-full w-[90%] md:w-[40%] mx-auto order-2`}
+        className={` ${small ? "" : "hidden"}  md:block py-8 lg:py-12 lg:px-12 md:min-w-[400px] max-w-[450px] md:mr-8 lg:mr-16 h-full w-[90%] md:w-[40%] mx-auto order-2`}
       >
         {/* add post section */}
         <section className="w-[90%] md:w-full mx-auto  px-8 py-4 shadow-md shadow-secondary/20 bg-[white]">

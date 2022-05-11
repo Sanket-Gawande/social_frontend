@@ -6,14 +6,16 @@ import Login from './components/Login'
 import Signup from './components/Signup'
 import AddPost from './components/AddPost'
 import IndividualPost from './components/Posts/IndividualPost'
+import { useSelector } from 'react-redux'
 const App = () => {
- const login =0;
+  const user = useSelector((state) => state.user)
+
   return (
     <>
-      <Header isLogin={login}/>
+      <Header isLogin={user.token} />
       <Routes>
-        <Route path="/" element={<Home isLogin={login} />}>
-          {!login ? (
+        <Route path="/" element={<Home isLogin={user.token} />}>
+          {!user.token ? (
             <>
               <Route index element={<Login />} />
               <Route path="/signup" element={<Signup />} />

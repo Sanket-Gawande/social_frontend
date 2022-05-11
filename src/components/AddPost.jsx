@@ -1,12 +1,13 @@
 import React, { useRef, useState } from 'react'
 import { FaFileUpload, FaFileImage } from 'react-icons/fa'
 import { createPost, getAllPosts } from '../Slices/postSlice'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 
-const AddPost = ({ state }) => {
+const AddPost = ( ) => {
+  const small = useSelector(state => state.misc.isSmallScreen);
   const dispatch = useDispatch()
   const imageRef = useRef()
-  const classs = state ? '' : 'hidden'
+  
   const [formData, setFormdata] = useState({
     title: '',
     message: '',
@@ -26,13 +27,24 @@ const AddPost = ({ state }) => {
   }
   const submitPost = (e) => {
     e.preventDefault()
+    e.target.reset()
+  setFormdata(
+    {
+      title: '',
+      message: '',
+      creator: '',
+      file: '',
+      tags: '',
+    }
+  )
+  imageRef.current.src =" /uploading.gif";
     dispatch(createPost(formData))
-    console.log('submitting')
+    
   }
   return (
     <>
       <div
-        className={` ${classs}  md:block py-8 lg:py-12 lg:px-12 md:min-w-[400px]   max-w-[450px] md:mr-8 lg:mr-16 h-full md:w-[40%] mx-auto  order-2`}
+        className={` ${small ? "" : "hidden"}  md:block py-8 lg:py-12 lg:px-12 md:min-w-[400px]   max-w-[450px] md:mr-8 lg:mr-16 h-full md:w-[40%] mx-auto  order-2`}
       >
         {/* add post section */}
         <section className="w-[90%] md:w-full mx-auto  px-8 py-4 shadow-md shadow-secondary/20 bg-[white]">
