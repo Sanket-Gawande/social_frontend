@@ -4,7 +4,7 @@ const Post = ({post}) => {
 
   return (
     
-    <div className="bg-[white] w-[90%] max-w-[400px] max-h-[400px]  md:w-auto mx-auto  p-4 min-w-[280px] relative shadow-md shadow-secondary/10">
+    <div className="bg-[white] w-[90%] max-w-[400px] max-h-[500px]  md:w-auto mx-auto  p-4 min-w-[280px] relative shadow-md shadow-secondary/10">
       {/* post author */}
       <div className="flex items-center ">
         <img
@@ -20,7 +20,7 @@ const Post = ({post}) => {
           {post?.title?.substring(0, 40) + '...'}
         </h4>
         <img
-          src={post.file}
+          src={import.meta.env.VITE_SERVER + post.thumbnail}
           alt="post"
           className="w-full aspect-square my-4  bg-main/20 object-cover"
         />

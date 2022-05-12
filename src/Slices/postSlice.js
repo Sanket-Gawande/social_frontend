@@ -11,6 +11,7 @@ const postSlice = createSlice({
       state.posts = action.payload;
     },
     createPost: (state, action) => {
+      console.log({ action });
       state.posts.push(action.payload);
     },
   },
@@ -24,11 +25,8 @@ export const getAsyncPost = () => async (dispatch) => {
 
 export const createAsyncPost = (payload) => async (dispatch) => {
   const raw = await fetch(`${import.meta.env.VITE_SERVER_API}/post/create`, {
-    body: JSON.stringify(payload),
+    body: payload,
     method: "post",
-    headers: {
-      "Content-type": "application/json",
-    },
   });
   const post = await raw.json();
   dispatch(createPost(post));
