@@ -1,32 +1,29 @@
 import { createSlice } from "@reduxjs/toolkit";
-const initialState = {
-  profile: {
-    name: "Sanket Gawande",
-    email: "sanketgawande.gcoey@gmail.com",
-  },
-  token: 1,
-};
+const initialState = {};
 
 const user = createSlice({
   name: "user",
   initialState,
   reducers: {
     login: (state, action) => {
+      localStorage.setItem("profile", JSON.stringify(action.payload.profile));
+      
       return {
         profile: action.payload.profile,
-        token: action.payload.token,
       };
     },
     logout: () => {
+      localStorage.setItem("profile", null);
+
       return {
-        profile: {},
-        token: null,
+        profile: null,
       };
     },
     signup: (state, action) => {
+      localStorage.setItem("profile", JSON.stringify(action.payload.profile));
+
       return {
         profile: action.payload.profile,
-        token: action.payload.token,
       };
     },
   },

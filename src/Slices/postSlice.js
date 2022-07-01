@@ -1,5 +1,8 @@
 import { createSlice } from "@reduxjs/toolkit";
+import { useSelector } from "react-redux";
 
+
+// const user = useSelector((state) => state.user);
 const initialState = {
   posts: [],
 };
@@ -11,7 +14,7 @@ const postSlice = createSlice({
       state.posts = action.payload;
     },
     createPost: (state, action) => {
-      console.log({ action });
+      
       state.posts.push(action.payload);
     },
   },
@@ -27,6 +30,7 @@ export const createAsyncPost = (payload) => async (dispatch) => {
   const raw = await fetch(`${import.meta.env.VITE_SERVER_API}/post/create`, {
     body: payload,
     method: "post",
+    credentials : "include"
   });
   const post = await raw.json();
   dispatch(createPost(post));

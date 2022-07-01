@@ -1,7 +1,17 @@
-import React from 'react'
-import { Link } from 'react-router-dom'
+import React, { useEffect } from 'react'
+import { Link, useNavigate } from 'react-router-dom'
 import { AiOutlineLogin, AiOutlineSearch, AiOutlineUser } from 'react-icons/ai'
+import { useDispatch, useSelector } from 'react-redux'
+import { logout } from '../Slices/loginSlice'
+import { screenSize } from '../Slices/miscSlice'
 const header = ({ isLogin }) => {
+  const token = useSelector((state) => state.user.token)
+  const navigate = useNavigate()
+  const dispatch = useDispatch()
+  const isSmallScreen = useSelector((state) => state.misc.isSmallScreen)
+  useEffect(() => {
+    token ? navigate('/') : ''
+  }, [token])
   return (
     <header className="shadow-md shadow-dark/10 bg-[white] fixed w-screen z-10">
       <div className="flex  relative  py-6 items-center px-8 md:px-12  justify-between">
@@ -24,20 +34,32 @@ const header = ({ isLogin }) => {
         </section>
         <section className="">
           {!isLogin ? (
-            <Link
-              to="/signup"
-              className="py-3 px-10 rounded-full inline-block text-main text-sm  bg-secondary"
-            >
-              Sign up <AiOutlineLogin className="inline w-5 h-5" />
-            </Link>
+            <>
+              <Link
+                to="/signup"
+                className="py-3 px-10 rounded-full  text-main text-sm  bg-secondary hidden md:inline-block"
+              >
+                Sign up <AiOutlineLogin className="inline w-5 h-5" />
+              </Link>
+              <span
+                onClick={() => {
+                  dispatch(screenSize(!isSmallScreen))
+                  scrollTo(0, 0)
+                }}
+                className="md:hidden top-40 right-0 flex items-center shadow-md rounded-full cursor-pointer bg-secondary  py-2 px-8 rounded-bl-full text-main "
+              >
+                Login
+              </span>
+            </>
           ) : (
-            <Link
-              to="/account"
-              className="py-3 px-10 rounded-full inline-block text-main text-sm  bg-secondary"
-            >
-              {' '}
-              <AiOutlineUser className="inline w-5 h-5" />
-            </Link>
+            <>
+              <Link
+                to="/account"
+                className="py-3 px-10 rounded-full inline-block text-main text-sm  bg-secondary"
+              >
+                <AiOutlineUser className="inline w-5 h-5" />
+              </Link>
+            </>
           )}
         </section>
       </div>

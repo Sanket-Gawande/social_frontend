@@ -4,20 +4,21 @@ const Post = ({post}) => {
 
   return (
     
-    <div className="bg-[white] w-[90%] max-w-[400px] max-h-[500px]  md:w-auto mx-auto  p-4 min-w-[280px] relative shadow-md shadow-secondary/10">
+    <div className="bg-[white] w-[90%] max-w-[400px] lg:max-h-[400px]  md:w-auto mx-auto  p-4 min-w-[280px] relative shadow-md shadow-secondary/10">
       {/* post author */}
       <div className="flex items-center ">
         <img
-          src="/user.png"
+        loading='lazy'
+          src={post.user_profile}
           alt="user"
-          className="w-8 h-8 bg-secondary/20 rounded-full mr-4 object-cover"
+          className="w-10 h-10 bg-secondary/20 rounded-full mr-4 object-cover"
         />
-        <h5 className="text-sm font-bold text-secondary/90">Sanket Gawande</h5>
+        <h5 className="text-md font-semibold text-secondary/90">{post.username}</h5>
       </div>
       {/* posted image div */}
       <div>
         <h4 className="my-2 font-medium text-sm ">
-          {post?.title?.substring(0, 40) + '...'}
+          { post?.title?.length > 40 ?  post?.title?.substring(0, 40) + '...' : post?.title }
         </h4>
         <img
           src={import.meta.env.VITE_SERVER + post.thumbnail}

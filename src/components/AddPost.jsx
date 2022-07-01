@@ -1,17 +1,18 @@
 import React, { useRef, useState } from 'react'
-import { FaFileUpload, FaFileImage } from 'react-icons/fa'
+import { FaFileUpload, FaFileImage, FaUpload } from 'react-icons/fa'
 import { createPost, getAllPosts, createAsyncPost } from '../Slices/postSlice'
 import { useDispatch, useSelector } from 'react-redux'
 
 const AddPost = () => {
   const small = useSelector((state) => state.misc.isSmallScreen)
+  const user = useSelector((state) => state.user)
+
   const dispatch = useDispatch()
   const imageRef = useRef()
 
   const [formData, setFormdata] = useState({
     title: '',
     message: '',
-    creator: '',
     file: '',
     tags: '',
   })
@@ -28,9 +29,11 @@ const AddPost = () => {
   const submitPost = (e) => {
     e.preventDefault()
     const form = new FormData(e.target)
+    form.append('username', user.profile.user.username)
+    form.append('user_profile', user.profile.user.profile)
     dispatch(createAsyncPost(form))
-    // e.target.reset()
-
+    e.target.reset()
+    setFormdata({})
     imageRef.current.src = ' /uploading.gif'
   }
   return (
@@ -48,6 +51,7 @@ const AddPost = () => {
           <form onSubmit={submitPost}>
             <div className="">
               <input
+                required
                 type="text"
                 placeholder="post title..."
                 name="title"
@@ -75,9 +79,10 @@ const AddPost = () => {
                   className="w-full aspect-square rounded-md object-cover my-4 border border-main"
                 />
                 <div className="absolute inset-0 hidden  bg-[white]/50 rounded-md backdrop-filter transition  backdrop-blur-md  group-hover:grid place-items-center text-[white]">
-                  <FaFileImage className="text-[black]/40 w-20 h-20 opacity-50" />
+                  <FaUpload className="text-[black]/40 w-20 h-20 opacity-50" />
                 </div>
                 <input
+                  required
                   type="file"
                   name="thumbnail"
                   id="postThumbnail"
@@ -88,13 +93,14 @@ const AddPost = () => {
               <textarea
                 name="description"
                 value={formData.message}
+                placeholder="Description"
                 id=""
                 rows="2"
                 onChange={(e) => {
                   setFormdata({ ...formData, message: e.target.value })
                 }}
                 className="border border-secondary/40 w-full  outline-none rounded-md px-2 py-1 "
-              ></textarea>
+              />
 
               <button
                 type="submit"
